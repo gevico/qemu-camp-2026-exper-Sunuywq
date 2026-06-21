@@ -263,3 +263,4 @@ config XLNX_VERSAL_TRNG
     bool
 
 source macio/Kconfig
+source g233/Kconfig

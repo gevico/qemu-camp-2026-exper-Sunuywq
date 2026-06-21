@@ -102,6 +102,10 @@ static const MemMapEntry virt_memmap[] = {
     [VIRT_PCIE_ECAM] =    { 0x30000000,    0x10000000 },
     [VIRT_PCIE_MMIO] =    { 0x40000000,    0x40000000 },
     [VIRT_DRAM] =         { 0x80000000,           0x0 },
+    [VIRT_WDT] =          { 0x10010000,        0x1000 },
+    [VIRT_GPIO] =         { 0x10012000,        0x1000 },
+    [VIRT_PWM] =          { 0x10015000,        0x1000 },
+    [VIRT_SPI] =          { 0x10018000,        0x1000 },
 };
 
 /* PCIe high mmio is fixed for RV32 */
@@ -1714,6 +1718,15 @@ static void virt_machine_init(MachineState *machine)
 
     sysbus_create_simple("goldfish_rtc", s->memmap[VIRT_RTC].base,
         qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
+
+    /* G233 on-chip peripherals */
+    g233_wdt_create(s->memmap[VIRT_WDT].base,
+                    qdev_get_gpio_in(mmio_irqchip, WDT_PLIC_IRQ));
+    g233_gpio_create(s->memmap[VIRT_GPIO].base,
+                     qdev_get_gpio_in(mmio_irqchip, GPIO_PLIC_IRQ));
+    g233_pwm_create(s->memmap[VIRT_PWM].base);
+    g233_spi_create(s->memmap[VIRT_SPI].base,
+                    qdev_get_gpio_in(mmio_irqchip, SPI_PLIC_IRQ));
 
     for (i = 0; i < ARRAY_SIZE(s->flash); i++) {
         /* Map legacy -drive if=pflash to machine properties */

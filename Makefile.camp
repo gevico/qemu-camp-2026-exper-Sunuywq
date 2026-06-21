@@ -26,8 +26,9 @@ CROSS_PREFIX ?= riscv64-unknown-elf-
 CONFIGURE_FLAGS := \
     --target-list=riscv64-softmmu,riscv64-linux-user \
     --extra-cflags='-O0 -g3' \
-    --cross-prefix-riscv64=$(CROSS_PREFIX) \
-    --enable-rust
+    --cross-prefix-riscv64=$(CROSS_PREFIX) 
+ #	\
+ #   --enable-rust
 
 # Parallel jobs (default: nproc)
 NPROC := $(shell nproc 2>/dev/null || echo 4)

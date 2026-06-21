@@ -1,0 +1,13 @@
+config G233_WDT
+    bool
+
+config G233_GPIO
+    bool
+
+config G233_PWM
+    bool
+
+config G233_SPI
+    bool
+    select SSI
+    select SSI_M25P80

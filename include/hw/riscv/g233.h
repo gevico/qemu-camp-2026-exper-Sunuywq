@@ -90,10 +90,17 @@ enum {
     VIRT_PLATFORM_BUS,
     VIRT_PCIE_ECAM,
     VIRT_IOMMU_SYS,
+    VIRT_WDT,
+    VIRT_GPIO,
+    VIRT_PWM,
+    VIRT_SPI,
 };
 
 enum {
     UART0_IRQ = 1,
+    GPIO_PLIC_IRQ = 2,
+    WDT_PLIC_IRQ = 4,
+    SPI_PLIC_IRQ = 5,
     VIRTIO_IRQ = 6, /* 6 to 13 */
     VIRTIO_COUNT = 8,
     RTC_IRQ = 14,
@@ -101,7 +108,10 @@ enum {
     IOMMU_SYS_IRQ = 0x24, /* 36-39 */
     VIRT_PLATFORM_BUS_IRQ = 64, /* 64 to 95 */
 };
-
+DeviceState *g233_wdt_create(hwaddr base, qemu_irq irq);
+DeviceState *g233_gpio_create(hwaddr base, qemu_irq irq);
+DeviceState *g233_pwm_create(hwaddr base);
+DeviceState *g233_spi_create(hwaddr base, qemu_irq irq);
 #define VIRT_PLATFORM_BUS_NUM_IRQS 32
 
 #define VIRT_IRQCHIP_NUM_MSIS 255
